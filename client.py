@@ -15,13 +15,13 @@ class RiddleClient():
                 'Play Game',
                 'Quit']
     
-    def menu(self,options):
+    def menu(self):
         '''This function creates an interactive Terminal menu.'''
 
-        terminal_menu = TerminalMenu(options) #Creates the Terminal Menu
+        terminal_menu = TerminalMenu(self.menu_options) #Creates the Terminal Menu
         option_num = terminal_menu.show() #Get user selected Option
 
-        return options[option_num]
+        return self.menu_options[option_num]
 
 
     def start(self):
@@ -34,7 +34,7 @@ class RiddleClient():
         client_running = True
 
         while client_running == True:
-            user_choice = self.menu(self.menu_options)
+            user_choice = self.menu()
 
             if user_choice == 'View All Riddles':
                 print('[View All Riddles]')
@@ -59,12 +59,14 @@ class RiddleClient():
                 self.guess_riddle(user_chosen_id, user_guess)
 
             elif user_choice == 'New Riddle':
+                print('[New Riddle]')
                 user_question = input('Enter a Riddle question: ')
                 user_answer = input('Enter the answer: ')
 
-                self.new_riddle()
+                self.new_riddle(user_question, user_answer)
 
             elif user_choice == 'Play Game':
+                print('[Riddler Game]')
                 self.game()
 
             elif user_choice == 'Quit':
