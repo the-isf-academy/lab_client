@@ -43,7 +43,8 @@ class RiddleClient():
             elif user_choice == 'View One Riddle':
                 print('[View One Riddle]')
 
-                user_chosen_id = int(input('Enter Riddle ID: '))
+
+                user_chosen_id = input('Enter Riddle ID: ')
 
                 self.view_one_riddle(user_chosen_id)
 
@@ -93,8 +94,10 @@ class RiddleClient():
             for riddle in all_riddles_json['riddles']:
                 print("  • {} (#{})".format(riddle['question'], riddle['id']))
         else:
+            error_json = response.json()
             print('Server {} Error. Try again...'.format(response.status_code))
-
+            print('-- {}'.format(error_json['errors'][0]))
+            
     def view_one_riddle(self, user_chosen_id):
         '''This function sends a GET request to riddles/one.
         It gets a single riddle with a specific ID and then formats it in a nice list.'''
@@ -114,7 +117,9 @@ class RiddleClient():
                 print("  • {}: {}".format(key,value))
 
         else:
+            error_json = response.json()
             print('Server {} Error. Try again...'.format(response.status_code))
+            print('-- {}'.format(error_json['errors'][0]))
 
     def guess_riddle(self, user_chosen_id, user_guess):
         '''This function sends a POST request to riddles/guess.
@@ -139,7 +144,9 @@ class RiddleClient():
                 print('Incorrect!')
 
         else:
+            error_json = response.json()
             print('Server {} Error. Try again...'.format(response.status_code))
+            print('-- {}'.format(error_json['errors'][0]))
        
     def new_riddle(self, user_question, user_answer):
         '''This function sends a POST request to riddles/new.
@@ -163,7 +170,9 @@ class RiddleClient():
                 print("  • {}: {}".format(key,value))
 
         else:
+            error_json = response.json()
             print('Server {} Error. Try again...'.format(response.status_code))
+            print('-- {}'.format(error_json['errors'][0]))
        
 
     def game(self):
@@ -183,7 +192,9 @@ class RiddleClient():
                 print()
 
         else:
+            error_json = response.json()
             print('Server {} Error. Try again...'.format(response.status_code))
+            print(error_json['errors'])
 
 if __name__ == "__main__":
     network_server= "http://riddles.student.isf.edu.hk/"
